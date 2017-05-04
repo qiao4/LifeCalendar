@@ -5,7 +5,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LifeCalendar {
-    static class Program {
+    public class Program {
+        static Program p = new Program();
+
+        Utils.Sqlite s = new Utils.Sqlite();
+
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
@@ -13,7 +17,7 @@ namespace LifeCalendar {
         static void Main() {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new FormMain(p));
         }
     }
 }
