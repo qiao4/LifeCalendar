@@ -10,7 +10,7 @@ namespace LifeCalendar.Utils {
         Sqlite s = null;
         static String tableName = "month_life";
         String sql = String.Format(@"create table if not exists {0}(
-month datetime,
+month varchar(10),
 before varchar(10)
 );
 select * from {0};", TableName);
@@ -28,7 +28,7 @@ select * from {0};", TableName);
             SharpLearn.Program.ShowTable(tb);
             tb.Rows.Clear();
             DataRow dr = tb.NewRow();
-            dr[0] = new DateTime(dt.Year, dt.Month, 1);
+            dr[0] = new DateTime(dt.Year, dt.Month, 1).ToString("yyyy-MM-dd");
             dr[1] = before ? "F" : "T";
             tb.Rows.Add(dr);
             s.SaveTable(tb, TableName);
@@ -41,18 +41,24 @@ select * from {0};", TableName);
 
         public void Delete(DateTime dt) {
             String resetSql = String.Format(@"delete from {0} where month = {1}"
-, TableName, new DateTime(dt.Year, dt.Month, 1).ToString().Quote());
+, TableName, new DateTime(dt.Year, dt.Month, 1).ToString("yyyy-MM-dd").Quote());
             s.ExcuteNonQuery(resetSql);
         }
 
         public DataTable GetData() {
-            String qrySql = String.Format(@"select * from {0} order by date(month) asc", TableName);
+            String qrySql = String.Format(@"select * from {0} order by month asc", TableName);
             return s.ExcuteQuery(qrySql);
         }
 
         public DateTime GetFirstData() {
-            String qrySql = String.Format(@"select month from {0} order by date(month) asc LIMIT 0,1", TableName);
-            return Convert.ToDateTime(s.ExcuteQuery(qrySql).Rows[0][0]);
+            String qrySql = String.Format(@"select month from {0} order by month asc LIMIT 0,1", TableName);
+            DataTable tb = s.ExcuteQuery(qrySql);
+            if (tb.Rows.Count > 0) {
+                return Convert.ToDateTime(s.ExcuteQuery(qrySql).Rows[0][0]);
+            }
+            else {
+                return new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            }
         }
     }
 }

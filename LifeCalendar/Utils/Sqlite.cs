@@ -30,10 +30,10 @@ namespace LifeCalendar.Utils {
             if (System.IO.File.Exists(Datasource))
                 return true;
             else {
-                System.IO.File.Create(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, this.datasource));
-                if (System.IO.File.Exists(Datasource)) {
-                    return true;
-                }
+                //System.IO.File.Create(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, this.datasource));
+                //if (System.IO.File.Exists(Datasource)) {
+                //    return true;
+                //}
             }
             return false;
         }
