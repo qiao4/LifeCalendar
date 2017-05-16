@@ -57,7 +57,7 @@ select * from {0};", TableName);
                 return Convert.ToDateTime(s.ExcuteQuery(qrySql).Rows[0][0]);
             }
             else {
-                return new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                return new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddYears(-20);
             }
         }
     }

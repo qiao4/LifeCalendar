@@ -49,7 +49,7 @@ namespace LifeCalendar {
         
         public void AddItem() {
             dbg_calendar.Rows.Clear();
-            dbg_calendar.Rows[0].Height = 40;
+            dbg_calendar.Rows[0].Height = 42;
             dbg_calendar.Rows.Add(39);
             int width = dbg_calendar.Width / 25;
             foreach (DataGridViewColumn col in dbg_calendar.Columns) {
@@ -64,8 +64,8 @@ namespace LifeCalendar {
             }
             int i = 0;
             foreach (DataGridViewRow row in dbg_calendar.Rows) {
+                row.Height = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height / 44;
                 foreach (DataGridViewCell cell in row.Cells) {
-                    //object[] value = new object[] { initDate.AddMonths(i++), "F" };
                     CellData value = new CellData(initDate.AddMonths(i++), false);
                     DataRow[] drs = data.Select("month = " + value.dt.ToString("yyyy-MM-dd").Quote());
                     if (drs.Length > 0) {
@@ -78,8 +78,6 @@ namespace LifeCalendar {
 
         private void FormMain_Load(object sender, EventArgs e) {
             SetPrecent();
-
-            dbg_calendar.Rows[0].Height = 40;
             dbg_calendar.Rows.Add(39);
             int width = dbg_calendar.Width / 25;
             foreach (DataGridViewColumn col in dbg_calendar.Columns) {
@@ -94,8 +92,9 @@ namespace LifeCalendar {
             }
             int i = 0;
             foreach (DataGridViewRow row in dbg_calendar.Rows) {
+                //https://stackoverflow.com/questions/12816860/get-screen-size-in-pixels-in-windows-form-in-c-sharp
+                row.Height = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height / 44;
                 foreach (DataGridViewCell cell in row.Cells) {
-                    //object[] value = new object[] { initDate.AddMonths(i++), "F" };
                     CellData value = new CellData(initDate.AddMonths(i++), false);
                     DataRow[] drs = data.Select("month = " + value.dt.ToString("yyyy-MM-dd").Quote());
                     if (drs.Length > 0) {
